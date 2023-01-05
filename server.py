@@ -1,10 +1,12 @@
 from flask import Flask, request
 from language_detection import LanguageDetection
+from sentiment_score import SentimentScore
 import requests
 import json
 app = Flask(__name__)
 
 LANGUAGE_DETECTION = LanguageDetection()
+SENTIMENT_SCORE = SentimentScore()
 
 @app.route('/api/language-detection',methods=['POST'])
 def language_detection():
@@ -22,14 +24,19 @@ def language_detection():
 @app.route('/api/sentiment-score',methods=['POST'])
 def sentiment_score():
     tweet_text = request.form.get('tweet_text')
+    prediction = SENTIMENT_SCORE.predict(tweet_text)
+    score = {}
+    for i in range(3):
+        score[prediction[0][i]] = prediction[1][i]
+    
     result = {
         'tweet_text': tweet_text, 
         'sentiment_score': {
-            'positive': 0.0,
-            'neutral': 0.0,
-            'negative': 0.0
+            'positive': score['__label__POSITIVE'],
+            'neutral': score['__label__NEUTRAL'],
+            'negative': score['__label__NEGATIVE']
         },
-        'detected_mood': 'NEUTRAL'
+        'detected_mood': prediction[0][0].split('_')[-1]
     }
     return json.dumps(result, ensure_ascii=False)
 
