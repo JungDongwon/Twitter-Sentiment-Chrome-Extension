@@ -3,27 +3,47 @@ from language_detection import LanguageDetection
 from sentiment_score import SentimentScore
 import requests
 import json
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 LANGUAGE_DETECTION = LanguageDetection()
 SENTIMENT_SCORE = SentimentScore()
 
+
 @app.route('/api/language-detection',methods=['POST'])
 def language_detection():
-    tweet_text = request.form.get('tweet_text')
+    data = request.json
+    tweet_text = data['tweet_text']
+    tweet_text = tweet_text.replace('\n', ' ')
+    if tweet_text == None:
+        return json.dumps({
+            'tweet_text': None, 
+            'sentiment_score': None,
+            'detected_mood': None
+        }, ensure_ascii=False) 
     lang = LANGUAGE_DETECTION.predict(tweet_text)
     is_english = False
     if lang[0][0] == '__label__en':
         is_english = True
     result = {
-        'tweet_text': tweet_text, 
-        'is_english': is_english
+        "tweet_text": tweet_text, 
+        "is_english": is_english
     }
     return json.dumps(result, ensure_ascii=False)
 
 @app.route('/api/sentiment-score',methods=['POST'])
 def sentiment_score():
-    tweet_text = request.form.get('tweet_text')
+    data = request.json
+    tweet_text = data['tweet_text']
+    tweet_text = tweet_text.replace('\n', ' ')
+    if tweet_text == None:
+        return json.dumps({
+            'tweet_text': None, 
+            'sentiment_score': None,
+            'detected_mood': None
+        }, ensure_ascii=False) 
     prediction = SENTIMENT_SCORE.predict(tweet_text)
     score = {}
     for i in range(3):
