@@ -1,7 +1,7 @@
 // server url 
-//BASE_URL = "https://myproject-415.wl.r.appspot.com"
+BASE_URL = "https://myproject-415.wl.r.appspot.com"
 // if server is running locally, use the url below instead.
-BASE_URL = "http://127.0.0.1:8080"
+// BASE_URL = "http://127.0.0.1:8080"
 
 async function addSentimentOfTweets(){
     let tweets_dict = {}
