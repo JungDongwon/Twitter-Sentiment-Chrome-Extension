@@ -18,7 +18,6 @@ async function addSentimentOfTweets(){
             body.push({tweet_text: tweetText})
         }
     }
-    console.log(tweets_dict)
     fetch(`${BASE_URL}/api/language-detection`,{
         method: 'POST',
         mode: 'cors',
