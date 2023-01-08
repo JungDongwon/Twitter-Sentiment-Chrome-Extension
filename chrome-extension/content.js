@@ -41,27 +41,30 @@ async function addSentimentOfTweets(){
                     }
 
                     if (tweet.id == ""){
-                        let rootNode = tweet.parentNode.parentNode.getElementsByTagName("time")[0].parentNode.parentNode.parentNode;
-                        const childNodes = rootNode.childNodes;
-                        if (childNodes.length == 2){
-                            const dot = childNodes[0].cloneNode(true);
-                            const detectedMood = childNodes[0].cloneNode(true);
-                            detectedMood.innerHTML = "Detected Mood: "+emoji;
-                            rootNode.appendChild(dot);
-                            rootNode.appendChild(detectedMood);
+                        if (tweet.parentNode.parentNode.parentNode.getElementsByTagName("time").length != 0){
+                            let rootNode = tweet.parentNode.parentNode.getElementsByTagName("time")[0].parentNode.parentNode.parentNode;
+                            const childNodes = rootNode.childNodes;
+                            if (childNodes.length == 2){
+                                const dot = childNodes[0].cloneNode(true);
+                                const detectedMood = childNodes[0].cloneNode(true);
+                                detectedMood.innerHTML = "Detected Mood: "+emoji;
+                                rootNode.appendChild(dot);
+                                rootNode.appendChild(detectedMood);
+                            }
                         }
                     }
                     else{
-                        let rootNode = tweet.parentNode.parentNode.parentNode.getElementsByTagName("time")[0].parentNode.parentNode.parentNode;
-                        const childNodes = rootNode.childNodes;
-                        if (childNodes.length == 3){
-                            const dot = childNodes[1].cloneNode(true);
-                            const detectedMood = childNodes[1].cloneNode(true);
-                            detectedMood.innerHTML = "Detected Mood: "+emoji;
-                            rootNode.appendChild(dot);
-                            rootNode.appendChild(detectedMood);
+                        if (tweet.parentNode.parentNode.parentNode.getElementsByTagName("time").length != 0){
+                            let rootNode = tweet.parentNode.parentNode.parentNode.getElementsByTagName("time")[0].parentNode.parentNode.parentNode;
+                            const childNodes = rootNode.childNodes;
+                            if (childNodes.length == 3){
+                                const dot = childNodes[1].cloneNode(true);
+                                const detectedMood = childNodes[1].cloneNode(true);
+                                detectedMood.innerHTML = "Detected Mood: "+emoji;
+                                rootNode.appendChild(dot);
+                                rootNode.appendChild(detectedMood);
+                            }
                         }
-                        
                     }
 
                 })
