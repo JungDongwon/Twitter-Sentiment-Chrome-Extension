@@ -1,7 +1,6 @@
 from flask import Flask, request
 from language_detection import LanguageDetection
 from sentiment_score import SentimentScore
-import requests
 import json
 from flask_cors import CORS
 
@@ -61,4 +60,5 @@ def sentiment_score():
     return json.dumps(result, ensure_ascii=False)
 
 if __name__ == "__main__":
+    # if running server locally in port 8080
     app.run(host='127.0.0.1', port=8080, debug=True)

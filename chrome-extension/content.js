@@ -1,11 +1,16 @@
-async function getTweets(){
+// server url 
+BASE_URL = "https://myproject-415.wl.r.appspot.com"
+// if server is running locally, use the url below instead.
+// BASE_URL = "http://127.0.0.1:8080"
+
+async function addSentimentOfTweets(){
     const tweets = document.querySelectorAll(`[data-testid="tweetText"]`);
     for (let tweet of tweets){
         const tweetText = tweet.innerText 
         if (tweetText == ""){
             continue
         }
-        fetch('http://127.0.0.1:8080/api/language-detection',{
+        fetch(`${BASE_URL}/api/language-detection`,{
             method: 'POST',
             mode: 'cors',
             headers: {'Content-Type': 'application/json'},
@@ -16,7 +21,7 @@ async function getTweets(){
         })
         .then(data => {
             if (data['is_english'] == true){
-                fetch('http://127.0.0.1:8080/api/sentiment-score',{
+                fetch(`${BASE_URL}/api/sentiment-score`,{
                     method: 'POST',
                     mode: 'cors',
                     headers: {'Content-Type': 'application/json'},
@@ -67,4 +72,4 @@ async function getTweets(){
     }
 }
 
-getTweets();
+addSentimentOfTweets();
